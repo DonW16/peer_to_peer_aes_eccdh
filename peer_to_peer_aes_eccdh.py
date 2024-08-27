@@ -67,7 +67,7 @@ class Generate_Keys:
         self.shared_key = None
         self.iv = None
         self.salt = None
-
+    # Derive a key using Argon2id from the shared secret and salt.
     def derive_key_argon2(self, shared_secret, salt):
         self.derive_key = hash_secret_raw(
             secret=shared_secret,
@@ -102,7 +102,6 @@ class Generate_Keys:
         return self.ciphertext, iv
     
     def decrypt_message(self, ciphertext, derive_key):
-        
         self.cipher = Cipher(algorithms.AES256(derive_key), modes.CFB(iv))
         self.decryptor = self.cipher.decryptor()
         self.plaintext = self.decryptor.update(ciphertext) + self.decryptor.finalize()
